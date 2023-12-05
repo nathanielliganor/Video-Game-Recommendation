@@ -9,8 +9,7 @@ url = f'https://api.rawg.io/api/games?key={api_key}&search={search_term}'
 
 game_data_list = []
 
-cache_file = f"cache/Fortnite.json"
-
+cache_file = f"cache/{search_term}.json"
 if os.path.exists(cache_file):
     with open(cache_file, "r") as f:
         game_data_list = json.load(f)
@@ -65,7 +64,5 @@ else:
     except Exception as e:
         print(f'Error: {e}')
 
+#print(game_data_list)
 
-print(game_data_list)
-
-### THIS CODE WORKS BETTER THAN FinalD3.py RIGHT NOW
