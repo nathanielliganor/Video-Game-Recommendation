@@ -28,7 +28,7 @@ else:
                 names_list = [platform_info['platform']['name'] for platform_info in platforms]
                 rating = game.get('rating', 'N/A')
                 esrb_rating = game.get('esrb_rating', {}).get('name', 'N/A')
-                tags = [tag.get('name', 'N/A') for tag in game.get('tags', [])]
+                tags = [tag.get('name', 'N/A') for tag in game.get('tags', []) if tag.get('language', 'N/A') == 'eng']
                 release_date = game.get('released', 'N/A')
                 screenshots = [screenshot.get('image', 'N/A') for screenshot in game.get('short_screenshots', [])]
                 
@@ -112,14 +112,14 @@ for game in game_data_list:
         game_node.add_child(platform_node)
     
     # Add rating to the game node
-        rating = str(rating)
-        rating_node = BinarySearchTreeNode(rating)
-        game_node.add_child(rating_node)
+    rating = str(rating)
+    rating_node = BinarySearchTreeNode(rating)
+    game_node.add_child(rating_node)
     
     # Add esrb rating to the game node
-    for esrb_rating in game['esrb_rating']:
-        esrb_rating_node = BinarySearchTreeNode(esrb_rating)
-        game_node.add_child(esrb_rating_node)
+    esrb_rating = str(esrb_rating)
+    esrb_rating_node = BinarySearchTreeNode(esrb_rating)
+    game_node.add_child(esrb_rating_node)
 
     # Add tags to the game node
     for tag in game['tags']:
@@ -144,8 +144,8 @@ def test_tree():
 test_tree()
 
 def print_tree(node, level=0):
-    print(' ' * level + node.name)
+    print(' ' * level  + '-' * level + '> ' + node.name)
     for child in node.children:
         print_tree(child, level + 1)
 
-print_tree(game_node)
+print_tree(game_nodes)
