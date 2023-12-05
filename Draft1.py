@@ -66,3 +66,24 @@ else:
 
 #print(game_data_list)
 
+# STEP 4: DATA PROCESSING AND ORGANIZATION
+
+class BinarySearchTreeNode:
+
+    def __init__(self, name):
+        self.name = name
+        self.children = []
+
+    def add_child(self, child_node):
+        self.children.append(child_node)
+    
+    def search(self, name):
+        if self.name == name:
+            return self
+        
+        for child in self.children:
+            result = child.search(name)
+            if result is not None:
+                return result
+        
+        return None
