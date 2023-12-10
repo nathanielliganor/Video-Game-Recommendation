@@ -2,6 +2,8 @@
 
 This is a Python program that manages a user's video game collection.
 
+Important notes: install requests, pickle, and random packages
+
 ## How to Use ##
 Start the game collection program
 
