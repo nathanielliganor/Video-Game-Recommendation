@@ -35,6 +35,23 @@ def display_tree(node, level=0):
 #display_tree(root_node)
 
 def main():
+    '''
+    primary function is to faciliate interaction with the user
+
+    performs the following tasks:
+    1. welcome the user to the program
+    2. processes the user's response to perform appropriate 
+    actions such as loading the collection 
+    from a file or calling the fetch_data() 
+    function to add a new game
+    3. After adding a new game to the collection, it prompts
+    the user to enter an attribute for game recommendations
+    4. For the entered attribute, it calls the query_tree() 
+    function to recommend games
+    5. Repeats the process of adding new games and recommending 
+    based on attributes until the user decides to stop. 
+    
+    '''
     tree = None
 
     print("Welcome to the Video Game Finder!")
@@ -53,12 +70,12 @@ def main():
         keep_searching = input("Would you like to search again? (yes/no): ")
     else:
         keep_searching = "yes"
-        search_term = input('Add a new game to your collection: ') ## Video Game Title
-        tree = fetch_data_and_add_to_tree(search_term, tree)
+        search_term = input('Add a new game to your collection: ')
+        tree = fetch_data(search_term, tree)
 
     while keep_searching.lower() == "yes":
         search_term = input('Add a new game to your collection? (Enter new game title or no): ') ## Video Game Title
-        tree = fetch_data_and_add_to_tree(search_term, tree) ## DOES DOING THIS CREATE A NEW TREE SEPARATE FROM FIRST TIME , YES IT DOES
+        tree = fetch_data(search_term, tree) ## DOES DOING THIS CREATE A NEW TREE SEPARATE FROM FIRST TIME , YES IT DOES
         query_tree(tree)
         keep_searching = input("Would you like to search again? (yes/no): ")
     
@@ -74,7 +91,20 @@ def main():
     
     print("Bye!")
 
-def fetch_data_and_add_to_tree(search_term, tree=None):
+def fetch_data(search_term, tree=None):
+    '''
+    this function fetches video game data from the RAWG API and
+    adds to the tree
+   
+    Parameters:
+    search_term (str): The title of the video game to look up in the API.
+    
+    tree (BinarySearchTreeNode, optional): The root node of the existing tree. 
+    If None, a new tree is created. Defaults to None.
+
+    Returns:
+    BinarySearchTreeNode: The root node of the tree after the video game data has been added.
+    '''
     # if there is no tree create a new one
     if tree is None:
         tree = BinarySearchTreeNode('Video Games')
@@ -117,7 +147,7 @@ def fetch_data_and_add_to_tree(search_term, tree=None):
     except Exception as e:
         None
 
-    # Loop through the game data and insert them into the tree
+    # loop through the game data and insert them into the tree
     for game in game_data_list:
         game_node = BinarySearchTreeNode(game['title'])
 
@@ -161,6 +191,12 @@ def fetch_data_and_add_to_tree(search_term, tree=None):
     return tree
 
 def query_tree(tree):
+    '''
+    Queries the binary search tree by a specified attribute and provides a list of recommended games.
+
+    Parameters: 
+    tree (BinarySearchTreeNode): The root node of the tree containing the video game data.
+    '''
     attribute = input("Enter video game attribute: ")
     node = tree.search(attribute)
     if node:
