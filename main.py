@@ -1,5 +1,5 @@
 import pickle
-from _507Classes import BinarySearchTreeNode
+from BinarySearchTree import BinarySearchTreeNode
 
 def main():
     tree = None
